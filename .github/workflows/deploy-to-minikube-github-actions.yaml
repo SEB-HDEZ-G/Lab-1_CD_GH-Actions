@@ -26,10 +26,10 @@ jobs:
       run: ls -R
 
     - name: Deploy to minikube
-      run: |
-        ls -l
-        cat k8s-node-app.yaml
-        kubectl apply -f k8s-node-app.yaml
+      run: kubectl apply -f k8s-node-app.yaml
+
+    - name: Wait for Deployment
+      run: kubectl rollout status deployment/nodejs-app
 
     - name: Check Pods
       run: kubectl get pods -o wide
