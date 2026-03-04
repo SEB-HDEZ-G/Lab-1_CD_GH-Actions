@@ -18,19 +18,25 @@ jobs:
           eval $(minikube -p minikube docker-env)
           docker build -f ./Dockerfile -t devopshint/node-app:latest .
           echo -n "verifying images:"
-          docker images         
+          docker images
+    - name: Show all resources
+      run:
+        kubectl get all  
     - name: Deploy to minikube
       run:
         kubectl apply -f k8s-node-app.yaml
 
     - name: Check Pods
-      run: kubectl get pods -o wide
+      run:
+        kubectl get pods -o wide
 
     - name: Describe Pods
-      run: kubectl describe pods
+      run:
+        kubectl describe pods
 
     - name: Pod Logs
-      run: kubectl logs -l app=nodejs-app --all-containers=true || true
+      run:
+        kubectl logs -l app=nodejs-app --all-containers=true || true
       
     - name: Test service URLs
       run: |
